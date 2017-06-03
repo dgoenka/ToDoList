@@ -2,6 +2,8 @@ package com.divyanshgoenka.todolist;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.divyanshgoenka.todolist.database.AppDatabase;
 import com.divyanshgoenka.todolist.models.ToDoItemService;
@@ -17,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ToDoListApplication extends Application {
 
     private static final String BASE_URL = "";
+    private static final String IS_FIRST_RUN = "IS_FIRST_RUN";
     private static ToDoListApplication instance;
 
     private AppDatabase appDatabase;
@@ -40,11 +43,21 @@ public class ToDoListApplication extends Application {
         Retrofit retroFit = new Retrofit.Builder().baseUrl(BASE_URL).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()).build();
         toDoItemService = retroFit.create(ToDoItemService.class);
+
     }
 
     public static ToDoListApplication getInstance() {
         return instance;
     }
 
+
+    public void firstRun() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, false);
+        if (isFirstRun) {
+            sharedPreferences.edit().putBoolean(IS_FIRST_RUN, false).apply();
+
+        }
+    }
 
 }
