@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.divyanshgoenka.todolist.database.AppDatabase;
+import com.divyanshgoenka.todolist.models.ToDoItem;
 import com.divyanshgoenka.todolist.models.ToDoItemService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -43,6 +44,7 @@ public class ToDoListApplication extends Application {
         Retrofit retroFit = new Retrofit.Builder().baseUrl(BASE_URL).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()).build();
         toDoItemService = retroFit.create(ToDoItemService.class);
+        firstRun();
 
     }
 
@@ -56,6 +58,9 @@ public class ToDoListApplication extends Application {
         boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, false);
         if (isFirstRun) {
             sharedPreferences.edit().putBoolean(IS_FIRST_RUN, false).apply();
+            appDatabase.toDoItemDao().addEvent(new ToDoItem("Lunch"));
+            appDatabase.toDoItemDao().addEvent(new ToDoItem("Dinner","Mexican"));
+
 
         }
     }

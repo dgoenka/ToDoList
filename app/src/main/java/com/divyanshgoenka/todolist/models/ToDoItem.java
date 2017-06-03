@@ -30,6 +30,15 @@ public class ToDoItem implements Serializable {
     public long created;
     public long due;
 
+    public ToDoItem(String title) {
+        this.title = title;
+    }
+
+    public ToDoItem(String title, String detail) {
+        this.title = title;
+        this.detail = detail;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         List<ToDoItem> toDoItems;
