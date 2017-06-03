@@ -23,11 +23,10 @@ public interface ToDoItemDao {
     @Update
     public void updateEvent(ToDoItem toDoItem);
 
-    @Query("Delete from TODOITEM where id = :toDoItem.id")
+    @Query("delete from TODOITEM where id = :toDoItem.id")
     public void delete(ToDoItem toDoItem);
 
-
-    @Query("Delete from TODOITEM")
+    @Query("delete from TODOITEM")
     public void deleteAll();
 
 }

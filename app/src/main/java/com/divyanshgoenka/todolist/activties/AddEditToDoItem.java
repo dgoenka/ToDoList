@@ -20,7 +20,6 @@ public class AddEditToDoItem extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_to_do_item);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     public enum ACTIONS {
