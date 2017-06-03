@@ -10,6 +10,7 @@ import android.os.IBinder;
 
 import com.divyanshgoenka.todolist.ToDoListApplication;
 import com.divyanshgoenka.todolist.models.ToDoItem;
+import com.divyanshgoenka.todolist.util.ComponentHelper;
 import com.divyanshgoenka.todolist.util.ConnectivityUtil;
 
 import java.util.List;
@@ -53,6 +54,11 @@ public class ToDoRefreshService extends Service {
         return START_STICKY;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ComponentHelper.unregisterSafely(this, checkAndUnregisterReceiver);
+    }
 
     public boolean checkAndFetch() {
         if (ConnectivityUtil.isConnected(this)) {
