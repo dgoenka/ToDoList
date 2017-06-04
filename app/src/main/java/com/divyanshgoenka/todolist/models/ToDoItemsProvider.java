@@ -20,6 +20,8 @@ public class ToDoItemsProvider implements ObservableOnSubscribe<List<ToDoItem>> 
 
     @Override
     public void subscribe(final ObservableEmitter e) throws Exception {
+        //Populating with fake data (first time only)
+        ToDoListApplication.getInstance().firstRunInsert();
         List<ToDoItem> list = ToDoListApplication.getInstance().getAppDatabase().toDoItemDao().getAllEvents();
         if (!e.isDisposed())
             e.onNext(list);

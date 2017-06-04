@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ToDoListApplication extends Application {
 
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "https://requestb.in/1mf4hs21/";
     private static final String IS_FIRST_RUN = "IS_FIRST_RUN";
     private static ToDoListApplication instance;
 
@@ -44,7 +44,6 @@ public class ToDoListApplication extends Application {
         Retrofit retroFit = new Retrofit.Builder().baseUrl(BASE_URL).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()).build();
         toDoItemService = retroFit.create(ToDoItemService.class);
-        firstRun();
 
     }
 
@@ -58,8 +57,8 @@ public class ToDoListApplication extends Application {
         return instance;
     }
 
-
-    public void firstRun() {
+    //For test use only - insertss sample data into the db
+    public void firstRunInsert() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         //Populating the DB with some sample data
         boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, true);
