@@ -71,7 +71,7 @@ public class ToDoItem implements Serializable {
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO - Logic to send 'done' message to server
+                    //TODO - Logic to send 'done' message to server & remove them from DB
                     ToDoItem.ViewHolder.this.toDoItems.remove(position);
                     ToDoItem.ViewHolder.this.toDoListAdapter.notifyItemRemoved(position);
                     ToDoItem.ViewHolder.this.toDoListAdapter.notifyItemRangeChanged(position, ToDoItem.ViewHolder.this.toDoItems.size());

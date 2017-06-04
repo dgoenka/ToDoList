@@ -48,6 +48,12 @@ public class ToDoListApplication extends Application {
 
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        instance = null;
+    }
+
     public static ToDoListApplication getInstance() {
         return instance;
     }
