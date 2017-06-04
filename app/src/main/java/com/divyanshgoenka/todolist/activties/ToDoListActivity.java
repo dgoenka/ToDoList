@@ -11,9 +11,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.divyanshgoenka.todolist.R;
+import com.divyanshgoenka.todolist.adapter.ToDoListAdapter;
+import com.divyanshgoenka.todolist.models.ToDoItem;
+import com.divyanshgoenka.todolist.models.ToDoItemsProvider;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class ToDoListActivity extends AppCompatActivity {
 
@@ -29,6 +38,8 @@ public class ToDoListActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     LinearLayoutManager linearLayoutManager;
+    private Disposable disposable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +52,27 @@ public class ToDoListActivity extends AppCompatActivity {
 
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        disposable = Observable.create(new ToDoItemsProvider()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::setData, this::error);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        disposable.dispose();
+    }
+
+    private void setData(List<ToDoItem> toDoItems) {
+        recyclerView.setAdapter(new ToDoListAdapter(this, toDoItems));
+    }
+
+    private void error(Throwable throwable) {
     }
 
     private void startAddActivity() {

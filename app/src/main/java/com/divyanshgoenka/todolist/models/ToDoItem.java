@@ -1,6 +1,7 @@
 package com.divyanshgoenka.todolist.models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,10 +31,15 @@ public class ToDoItem implements Serializable {
     public long created;
     public long due;
 
+    public ToDoItem() {
+    }
+
+    @Ignore
     public ToDoItem(String title) {
         this.title = title;
     }
 
+    @Ignore
     public ToDoItem(String title, String detail) {
         this.title = title;
         this.detail = detail;

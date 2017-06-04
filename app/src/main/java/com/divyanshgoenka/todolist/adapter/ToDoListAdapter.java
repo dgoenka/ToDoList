@@ -38,7 +38,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoItem.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ToDoItem.ViewHolder holder, int position) {
-        holder.onBind(items, position);
+        holder.onBind(this, items, position);
     }
 
     @Override

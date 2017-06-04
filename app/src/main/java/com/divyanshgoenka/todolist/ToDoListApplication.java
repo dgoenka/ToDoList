@@ -55,11 +55,13 @@ public class ToDoListApplication extends Application {
 
     public void firstRun() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, false);
+        //Populating the DB with some sample data
+        boolean isFirstRun = sharedPreferences.getBoolean(IS_FIRST_RUN, true);
         if (isFirstRun) {
             sharedPreferences.edit().putBoolean(IS_FIRST_RUN, false).apply();
+            appDatabase.toDoItemDao().addEvent(new ToDoItem("Breakfast", "Mexican"));
             appDatabase.toDoItemDao().addEvent(new ToDoItem("Lunch"));
-            appDatabase.toDoItemDao().addEvent(new ToDoItem("Dinner","Mexican"));
+            appDatabase.toDoItemDao().addEvent(new ToDoItem("Dinner", "Mexican"));
 
 
         }
