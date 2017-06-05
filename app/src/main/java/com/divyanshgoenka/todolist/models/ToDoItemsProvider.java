@@ -23,6 +23,9 @@ public class ToDoItemsProvider implements ObservableOnSubscribe<List<ToDoItem>> 
         //Populating with fake data (first time only)
         ToDoListApplication.getInstance().firstRunInsert();
         List<ToDoItem> list = ToDoListApplication.getInstance().getAppDatabase().toDoItemDao().getAllEvents();
+
+        //T
+
         if (!e.isDisposed())
             e.onNext(list);
         Log.e(TAG, " the list is " + list);

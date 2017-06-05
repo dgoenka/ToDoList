@@ -3,11 +3,14 @@ package com.divyanshgoenka.todolist.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.divyanshgoenka.todolist.R;
+import com.divyanshgoenka.todolist.activties.AddEditToDoItemActivity;
 import com.divyanshgoenka.todolist.adapter.ToDoListAdapter;
 
 import java.io.Serializable;
@@ -66,7 +69,7 @@ public class ToDoItem implements Serializable {
         public void onBind(ToDoListAdapter toDoListAdapter, List<ToDoItem> toDoItems, int position) {
             this.toDoItems = toDoItems;
             this.toDoListAdapter = toDoListAdapter;
-            ToDoItem toDoItem = toDoItems.get(position);
+            final ToDoItem toDoItem = toDoItems.get(position);
             txtView.setText(toDoItem.title);
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,12 +80,22 @@ public class ToDoItem implements Serializable {
                     ToDoItem.ViewHolder.this.toDoListAdapter.notifyItemRangeChanged(position, ToDoItem.ViewHolder.this.toDoItems.size());
                 }
             });
+            this.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, AddEditToDoItemActivity.class);
+                    intent.putExtra(AddEditToDoItemActivity.TO_DO_ITEM, toDoItem);
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
         public void onUnbind() {
             txtView.setText(null);
             done.setOnClickListener(null);
+            itemView.setOnClickListener(null);
             toDoItems = null;
             toDoListAdapter = null;
         }

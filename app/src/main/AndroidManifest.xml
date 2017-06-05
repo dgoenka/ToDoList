@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activties.AddEditToDoItem"
+            android:name=".activties.AddEditToDoItemActivity"
             android:label="@string/event"
             android:theme="@style/AppTheme.NoActionBar" />
 
